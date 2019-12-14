@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PSSM tools</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="container">
+    <canvas id="canvas" width="1300" height="1300"></canvas>
+</div>
+<script type="module">
+    import {drawRadiation} from "./js/drawRadiation.js";
+    import {a} from "./js/aaa.js";
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    drawRadiation(ctx, a, {font: "24px Arial"});
+</script>
+</body>
+</html>
