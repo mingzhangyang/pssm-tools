@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>PSSM tools</title>
+    <link rel="stylesheet" href="css/chart.css">
 </head>
 <body>
-
+<div id="container">
+    <div id="bar-chart" class="chart-container">
+        <div id="score--30" class="bar">
+            <div class="header-info"></div>
+            <div class="top-bar"></div>
+            <div class="bottom-bar"></div>
+            <div class="footer-info"></div>
+        </div>
+    </div>
+    <canvas id="line-chart" class="chart-container" width="1000" height="600"></canvas>
+</div>
+<script type="module" src="js/chart.js"></script>
 </body>
 </html>
