@@ -89,7 +89,7 @@ export function draw_1(canvas, data, opts) {
 
 }
 
-export function draw_2(canvas, m, opts) {
+export function draw_2(canvas, m, opts={squareWidth: 6, spacing: 2}) {
   console.log(aaa.length);
   let ctx = canvas.getContext("2d");
   if (!ctx) {
@@ -99,13 +99,13 @@ export function draw_2(canvas, m, opts) {
   let h = +canvas.getAttribute("height");
   ctx.clearRect(0, 0, w, h);
 
-  let d = 6;
+  let d = opts.squareWidth;
   let n = 0;
   for (; n < aaa.length; n++) {
     let c = n % 100;
     let r = (n - c) / 100;
     let t = m.get(aaa[n]);
     ctx.fillStyle = t ? "#f66" : "#ccc";
-    ctx.fillRect((d+2) * c, (d+2) * r, d, d);
+    ctx.fillRect((d+opts.spacing) * c, (d+opts.spacing) * r, d, d);
   }
 }
