@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PSSM tools</title>
+    <link rel="stylesheet" href="css/chart.css">
+</head>
+<body>
+<div id="container">
+    <div id="bar-chart" class="chart-container">
+        <div class="y-axis">
+            <span class="tick">8000</span>
+            <span class="tick">6000</span>
+            <span class="tick">4000</span>
+            <span class="tick">2000</span>
+            <span class="tick">0</span>
+        </div>
+        <div class="x-axis-name">Score</div>
+        <div class="y-axis-name">Count</div>
+    </div>
+    <div id="line-chart" class="chart-container">
+        <canvas id="line-chart-canvas" width="1000" height="600"></canvas>
+        <div class="y-axis">
+            <span class="tick">100%</span>
+            <span class="tick">75%</span>
+            <span class="tick">50%</span>
+            <span class="tick">25%</span>
+            <span class="tick">0</span>
+        </div>
+        <div class="x-axis"></div>
+        <div class="x-axis-name">Score</div>
+        <div class="y-axis-name">Specificity</div>
+    </div>
+</div>
+<script type="module" src="js/chart.js"></script>
+</body>
+</html>
