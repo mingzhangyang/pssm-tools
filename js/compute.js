@@ -106,3 +106,19 @@ export function sumAbove(d, score) {
   }
   return res;
 }
+
+export function countAtPosition(data=sample, threshold=0) {
+  let res = new Array(data.seq.length - 2);
+  for (let i = 0; i < data.seq.length - 2; i++) {
+    res[i] = 0;
+    let j = i + 1;
+    let k = i + 2;
+    for (let a of aaa) {
+      let score = data.scores[i][a[0]] + data.scores[j][a[1]] + data.scores[k][a[2]];
+      if (score >= threshold) {
+        res[i]++;
+      }
+    }
+  }
+  return res;
+}
