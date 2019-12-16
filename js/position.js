@@ -7,6 +7,12 @@ function createChart() {
   ctx.w = +canvas.getAttribute('width');
   ctx.h = canvas.getAttribute('height');
   ctx.threshold = 12;
+  ctx.outerSpace = 50;
+  ctx.innerSpace = 30;
+  ctx.drawingArea = {
+    width: ctx.w - (ctx.outerSpace + ctx.innerSpace),
+    height: ctx.h - (ctx.outerSpace + ctx.innerSpace),
+  };
 
   // canvas.style.width = ctx.w + "px";
   // canvas.style.height = ctx.h + "px";
