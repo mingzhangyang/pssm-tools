@@ -6,6 +6,7 @@ function createChart() {
   let ctx = canvas.getContext('2d');
   ctx.w = +canvas.getAttribute('width');
   ctx.h = canvas.getAttribute('height');
+  ctx.threshold = 12;
 
   // canvas.style.width = ctx.w + "px";
   // canvas.style.height = ctx.h + "px";
@@ -67,14 +68,14 @@ function getPos(canvas, evt) {
   };
 }
 
-function draw(ctx, th=12, pos = {x: 0, y: 0}) {
+function draw(ctx, pos = {x: 0, y: 0}) {
   ctx.save();
   ctx.clearRect(60, 60, ctx.w - 120, ctx.h - 120);
   ctx.translate(80, ctx.h - 80);
 
   ctx.beginPath();
   ctx.moveTo(0, 0);
-  let d = countAtPosition(sample, th);
+  let d = countAtPosition(sample, ctx.threshold);
   ctx.data = d;
   for (let i = 1; i < d.length; i++) {
     ctx.lineTo(i * 20, -d[i] * 2);
@@ -124,6 +125,6 @@ range.addEventListener("input", () => {
   range.nextElementSibling.innerText = range.value;
   let canvas = document.getElementById('line-chart-canvas');
   let ctx = canvas.getContext("2d");
-  console.log(range.value);
-  draw(ctx, +range.value);
+  ctx.threshold = +range.value;
+  draw(ctx);
 });
