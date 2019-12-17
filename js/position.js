@@ -133,7 +133,7 @@ function draw(ctx, pos = {x: 0, y: 0}) {
 
   if (pos.x > xSpaceStart && pos.x < ctx.w - xSpaceEnd && pos.y > ySpaceStart && pos.y < ctx.h - ySpaceEnd) {
     let r = (pos.x - xSpaceStart) % xScale;
-    let n = Math.round((pos.x - xSpaceStart - r) / xScale);
+    let n = Math.floor((pos.x - xSpaceStart) / xScale);
     n = r > xScale / 2 ? n + 1 : n; // n should be transformed to index of data by minus 1
     if (n === 0 || n > ctx.data.length) {
       return;
@@ -154,7 +154,7 @@ function draw(ctx, pos = {x: 0, y: 0}) {
     ctx.fillStyle = "#222";
     ctx.restore();
     ctx.save();
-    ctx.translate(ctx.w - xSpaceEnd - 100, ySpaceStart);
+    ctx.translate(ctx.w - xSpaceEnd - 100 - 30, ySpaceStart + 30);
     ctx.shadowBlur = "10";
     ctx.shadowColor = "rgba(255, 66, 99, .8)";
     ctx.beginPath();
@@ -162,7 +162,7 @@ function draw(ctx, pos = {x: 0, y: 0}) {
     ctx.fillRect(0, 0, 100, 100);
     ctx.restore();
     ctx.save();
-    ctx.translate(ctx.w - xSpaceEnd - 100, ySpaceStart);
+    ctx.translate(ctx.w - xSpaceEnd - 100 - 30, ySpaceStart + 30);
     ctx.fillStyle = "#222";
     ctx.font = "24px Arial";
     ctx.fillText(`y: ${ctx.data[n-1]}`, 50, 35);

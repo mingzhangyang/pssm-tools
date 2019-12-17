@@ -1,0 +1,45 @@
+.chart-container {
+    width: 1000px;
+    height: 600px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    margin: 60px auto;
+    position: relative;
+}
+
+.x-axis-name {
+    position: absolute;
+    height: 20px;
+    right: 0;
+    bottom: 0;
+    margin-bottom: 40px;
+    margin-right: -40px;
+    font-weight: bold;
+}
+
+.y-axis-name {
+    position: absolute;
+    width: 160px;
+    top: 0;
+    left: 0;
+    margin-left: -120px;
+    text-align: right;
+    font-weight: bold;
+}
+
+div.control {
+    width: 400px;
+    height: 40px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+#range-bar {
+    width: 300px;
+}
+
+#range-bar + label {
+    font-size: 24px;
+}

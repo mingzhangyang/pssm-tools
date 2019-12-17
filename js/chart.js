@@ -103,7 +103,7 @@ function draw(ctx, pos = {x: 0, y: 0}) {
 
   if (pos.x > 36 && pos.x < 42 + (ctx.data.length - 1) * ctx.spacing) {
     let r = (pos.x - 42) % ctx.spacing;
-    let n = Math.floor((pos.x - 42 - r) / ctx.spacing);
+    let n = Math.floor((pos.x - 42) / ctx.spacing);
     n = r > 6 ? n + 1 : n;
 
     ctx.save();
