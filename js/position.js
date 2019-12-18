@@ -41,23 +41,25 @@ function getMax(arr) {
   return x;
 }
 
+function getPos(canvas, evt) {
+  let rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top,
+  };
+}
+
 function createChart() {
   let canvas = document.getElementById('line-chart-canvas');
   let ctx = canvas.getContext('2d');
-  ctx.w = +canvas.getAttribute('width');
-  ctx.h = canvas.getAttribute('height');
-  ctx.threshold = 12;
+  ctx.w = canvas.clientWidth;
+  ctx.h = canvas.clientHeight;
+
   ctx.drawingBox = new DrawingBox(ctx.w, ctx.h);
+  ctx.devicePixelRatio = 1;
+
+  ctx.threshold = 12;
   ctx.data = countAtPosition(sample, ctx.threshold);
-
-  // canvas.style.width = ctx.w + "px";
-  // canvas.style.height = ctx.h + "px";
-  //
-  // let r = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-  // canvas.width = ctx.w * r;
-  // canvas.height = ctx.h * r;
-  // ctx.scale(r, r);
-
 
   draw(ctx);
 
@@ -74,14 +76,6 @@ function createChart() {
   });
 }
 
-function getPos(canvas, evt) {
-  let rect = canvas.getBoundingClientRect();
-  return {
-    x: evt.clientX - rect.left,
-    y: evt.clientY - rect.top,
-  };
-}
-
 function draw(ctx, pos = {x: 0, y: 0}) {
   ctx.strokeStyle = '#222';
   ctx.lineWidth = 2;
@@ -90,7 +84,18 @@ function draw(ctx, pos = {x: 0, y: 0}) {
   ctx.textBaseline = 'middle';
   ctx.font = '16px Arial';
   ctx.save();
-  ctx.clearRect(0, 0, ctx.w, ctx.h);
+
+  ctx.clearRect(0, 0, +ctx.w * ctx.devicePixelRatio, +ctx.h * ctx.devicePixelRatio);
+  let r = window.devicePixelRatio;
+
+  if (ctx.devicePixelRatio < r) {
+    ctx.devicePixelRatio = r;
+    ctx.canvas.width = ctx.w * r;
+    ctx.canvas.height = ctx.h * r;
+    ctx.restore();
+    ctx.scale(r, r,);
+    ctx.save();
+  }
 
   ctx.translate(ctx.drawingBox.outerBoxOrigin.x, ctx.drawingBox.outerBoxOrigin.y);
   ctx.beginPath();
@@ -172,14 +177,16 @@ function draw(ctx, pos = {x: 0, y: 0}) {
   }
 }
 
-createChart();
+(function main() {
+  createChart();
 
-let range = document.getElementById("range-bar");
-range.addEventListener("input", () => {
-  range.nextElementSibling.innerText = range.value;
-  let canvas = document.getElementById('line-chart-canvas');
-  let ctx = canvas.getContext("2d");
-  ctx.threshold = +range.value;
-  ctx.data = countAtPosition(sample, ctx.threshold);
-  draw(ctx);
-});
+  let range = document.getElementById("range-bar");
+  range.addEventListener("input", () => {
+    range.nextElementSibling.innerText = range.value;
+    let canvas = document.getElementById('line-chart-canvas');
+    let ctx = canvas.getContext("2d");
+    ctx.threshold = +range.value;
+    ctx.data = countAtPosition(sample, ctx.threshold);
+    draw(ctx);
+  });
+})();

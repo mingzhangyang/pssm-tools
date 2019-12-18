@@ -1,9 +1,14 @@
 body {
-    background-color: rgb(249,250,251);
+    background-color: rgb(249, 250, 251);
+}
+
+#line-chart-canvas {
+    width: 1200px;
+    height: 600px;
 }
 
 .chart-container {
-    width: 1000px;
+    width: 1200px;
     height: 600px;
     border: 2px solid transparent;
     border-radius: 4px;
@@ -40,6 +45,7 @@ div.control {
     justify-content: space-around;
     align-items: center;
 }
+
 #range-bar {
     width: 300px;
 }
