@@ -44,19 +44,13 @@ function getMax(arr) {
 function createChart() {
   let canvas = document.getElementById('line-chart-canvas');
   let ctx = canvas.getContext('2d');
-  ctx.w = +canvas.getAttribute('width');
-  ctx.h = canvas.getAttribute('height');
+  ctx.w = canvas.clientWidth;
+  ctx.h = canvas.clientHeight;
+
   ctx.threshold = 12;
   ctx.drawingBox = new DrawingBox(ctx.w, ctx.h);
+  ctx.deivePixelRatio = 1;
   ctx.data = countAtPosition(sample, ctx.threshold);
-
-  // canvas.style.width = ctx.w + "px";
-  // canvas.style.height = ctx.h + "px";
-  //
-  // let r = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-  // canvas.width = ctx.w * r;
-  // canvas.height = ctx.h * r;
-  // ctx.scale(r, r);
 
 
   draw(ctx);
@@ -88,9 +82,19 @@ function draw(ctx, pos = {x: 0, y: 0}) {
   ctx.fillStyle = '#222';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = '16px Arial';
+  ctx.font = 'bold 16px Arial';
   ctx.save();
-  ctx.clearRect(0, 0, ctx.w, ctx.h);
+
+  ctx.clearRect(0, 0, +ctx.w * ctx.deivePixelRatio, +ctx.h * ctx.deivePixelRatio);
+  let r = window.devicePixelRatio;
+  if (ctx.deivePixelRatio !== r && r > 1) {
+    ctx.deivePixelRatio = r;
+    ctx.canvas.width = ctx.w * r;
+    ctx.canvas.height = ctx.h * r;
+    ctx.restore();
+    ctx.scale(r, r,);
+    ctx.save();
+  }
 
   ctx.translate(ctx.drawingBox.outerBoxOrigin.x, ctx.drawingBox.outerBoxOrigin.y);
   ctx.beginPath();
