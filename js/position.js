@@ -41,17 +41,25 @@ function getMax(arr) {
   return x;
 }
 
+function getPos(canvas, evt) {
+  let rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top,
+  };
+}
+
 function createChart() {
   let canvas = document.getElementById('line-chart-canvas');
   let ctx = canvas.getContext('2d');
   ctx.w = canvas.clientWidth;
   ctx.h = canvas.clientHeight;
 
-  ctx.threshold = 12;
   ctx.drawingBox = new DrawingBox(ctx.w, ctx.h);
-  ctx.deivePixelRatio = 1;
-  ctx.data = countAtPosition(sample, ctx.threshold);
+  ctx.devicePixelRatio = 1;
 
+  ctx.threshold = 12;
+  ctx.data = countAtPosition(sample, ctx.threshold);
 
   draw(ctx);
 
@@ -68,27 +76,20 @@ function createChart() {
   });
 }
 
-function getPos(canvas, evt) {
-  let rect = canvas.getBoundingClientRect();
-  return {
-    x: evt.clientX - rect.left,
-    y: evt.clientY - rect.top,
-  };
-}
-
 function draw(ctx, pos = {x: 0, y: 0}) {
   ctx.strokeStyle = '#222';
   ctx.lineWidth = 2;
   ctx.fillStyle = '#222';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = 'bold 16px Arial';
+  ctx.font = '16px Arial';
   ctx.save();
 
-  ctx.clearRect(0, 0, +ctx.w * ctx.deivePixelRatio, +ctx.h * ctx.deivePixelRatio);
+  ctx.clearRect(0, 0, +ctx.w * ctx.devicePixelRatio, +ctx.h * ctx.devicePixelRatio);
   let r = window.devicePixelRatio;
-  if (ctx.deivePixelRatio !== r && r > 1) {
-    ctx.deivePixelRatio = r;
+
+  if (ctx.devicePixelRatio < r) {
+    ctx.devicePixelRatio = r;
     ctx.canvas.width = ctx.w * r;
     ctx.canvas.height = ctx.h * r;
     ctx.restore();
@@ -176,14 +177,16 @@ function draw(ctx, pos = {x: 0, y: 0}) {
   }
 }
 
-createChart();
+(function main() {
+  createChart();
 
-let range = document.getElementById("range-bar");
-range.addEventListener("input", () => {
-  range.nextElementSibling.innerText = range.value;
-  let canvas = document.getElementById('line-chart-canvas');
-  let ctx = canvas.getContext("2d");
-  ctx.threshold = +range.value;
-  ctx.data = countAtPosition(sample, ctx.threshold);
-  draw(ctx);
-});
+  let range = document.getElementById("range-bar");
+  range.addEventListener("input", () => {
+    range.nextElementSibling.innerText = range.value;
+    let canvas = document.getElementById('line-chart-canvas');
+    let ctx = canvas.getContext("2d");
+    ctx.threshold = +range.value;
+    ctx.data = countAtPosition(sample, ctx.threshold);
+    draw(ctx);
+  });
+})();
