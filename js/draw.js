@@ -96,9 +96,8 @@ export function draw_2(canvas, m, opts={squareWidth: 6, spacing: 2}) {
   if (!ctx) {
     console.log("Canvas is not supported in your browser");
   }
-  let w = +canvas.getAttribute("width");
-  let h = +canvas.getAttribute("height");
-  ctx.clearRect(0, 0, ctx.w * ctx.devicePixelRatio, ctx.h * ctx.devicePixelRatio);
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   updateScale(ctx);
 

@@ -1,6 +1,6 @@
 import {countAtPosition} from './compute.js';
 import sample from '../data/sample.js';
-import {updateScale} from "./setupScale.js";
+import {setupScale, updateScale} from "./setupScale.js";
 
 class DrawingBox {
   constructor (w, h, opts={}) {
@@ -54,12 +54,7 @@ function createChart() {
   let canvas = document.getElementById('line-chart-canvas');
   let ctx = canvas.getContext('2d');
 
-  ctx.w = canvas.clientWidth;
-  ctx.h = canvas.clientHeight;
-  ctx.devicePixelRatio = window.devicePixelRatio;
-  canvas.width = ctx.w * ctx.devicePixelRatio;
-  canvas.height = ctx.h * ctx.devicePixelRatio;
-  ctx.scale(ctx.devicePixelRatio, ctx.devicePixelRatio);
+  setupScale(ctx);
 
   ctx.drawingBox = new DrawingBox(ctx.w, ctx.h);
 
@@ -90,7 +85,7 @@ function draw(ctx, pos = {x: 0, y: 0}) {
   ctx.font = '16px Arial';
   ctx.save();
 
-  ctx.clearRect(0, 0, +ctx.w * ctx.devicePixelRatio, +ctx.h * ctx.devicePixelRatio);
+  ctx.clearRect(0, 0, +ctx.canvas.width, +ctx.h * ctx.canvas.height);
 
   updateScale(ctx);
 
