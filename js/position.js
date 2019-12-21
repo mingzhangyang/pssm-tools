@@ -1,5 +1,6 @@
 import {countAtPosition} from './compute.js';
 import sample from '../data/sample.js';
+import {updateScale} from "./setupScale.js";
 
 class DrawingBox {
   constructor (w, h, opts={}) {
@@ -52,9 +53,9 @@ function getPos(canvas, evt) {
 function createChart() {
   let canvas = document.getElementById('line-chart-canvas');
   let ctx = canvas.getContext('2d');
+
   ctx.w = canvas.clientWidth;
   ctx.h = canvas.clientHeight;
-
   ctx.devicePixelRatio = window.devicePixelRatio;
   canvas.width = ctx.w * ctx.devicePixelRatio;
   canvas.height = ctx.h * ctx.devicePixelRatio;
@@ -90,16 +91,8 @@ function draw(ctx, pos = {x: 0, y: 0}) {
   ctx.save();
 
   ctx.clearRect(0, 0, +ctx.w * ctx.devicePixelRatio, +ctx.h * ctx.devicePixelRatio);
-  let r = window.devicePixelRatio;
 
-  if (ctx.devicePixelRatio < r) {
-    ctx.devicePixelRatio = r;
-    ctx.canvas.width = ctx.w * r;
-    ctx.canvas.height = ctx.h * r;
-    ctx.restore();
-    ctx.scale(r, r,);
-    ctx.save();
-  }
+  updateScale(ctx);
 
   ctx.translate(ctx.drawingBox.outerBoxOrigin.x, ctx.drawingBox.outerBoxOrigin.y);
   ctx.beginPath();

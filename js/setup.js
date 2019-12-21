@@ -1,6 +1,7 @@
 import {compute, sumAbove} from "./compute.js";
 import {draw_2} from "./draw.js";
 import {aaa} from "./aaa.js";
+import {setupScale} from "./setupScale.js";
 
 const squareWidth = 6;
 const spacing = 2;
@@ -25,6 +26,10 @@ function recognize(canvas, evt) {
 
 export default function setup() {
   let canvas = document.getElementById("canvas");
+  let ctx = canvas.getContext("2d");
+
+  setupScale(ctx);
+
   draw_2(canvas, m);
   document.getElementById("count").innerText = m.size + '';
 

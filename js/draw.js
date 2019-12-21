@@ -1,5 +1,6 @@
 import {gradient} from "./color.js";
 import {aaa} from "./aaa.js";
+import {updateScale} from "./setupScale.js";
 
 export function draw_1(canvas, data, opts) {
   let ctx = canvas.getContext("2d");
@@ -90,14 +91,16 @@ export function draw_1(canvas, data, opts) {
 }
 
 export function draw_2(canvas, m, opts={squareWidth: 6, spacing: 2}) {
-  console.log(aaa.length);
+  // console.log(aaa.length);
   let ctx = canvas.getContext("2d");
   if (!ctx) {
     console.log("Canvas is not supported in your browser");
   }
   let w = +canvas.getAttribute("width");
   let h = +canvas.getAttribute("height");
-  ctx.clearRect(0, 0, w, h);
+  ctx.clearRect(0, 0, ctx.w * ctx.devicePixelRatio, ctx.h * ctx.devicePixelRatio);
+
+  updateScale(ctx);
 
   let d = opts.squareWidth;
   let n = 0;
