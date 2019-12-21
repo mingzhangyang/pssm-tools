@@ -55,8 +55,12 @@ function createChart() {
   ctx.w = canvas.clientWidth;
   ctx.h = canvas.clientHeight;
 
+  ctx.devicePixelRatio = window.devicePixelRatio;
+  canvas.width = ctx.w * ctx.devicePixelRatio;
+  canvas.height = ctx.h * ctx.devicePixelRatio;
+  ctx.scale(ctx.devicePixelRatio, ctx.devicePixelRatio);
+
   ctx.drawingBox = new DrawingBox(ctx.w, ctx.h);
-  ctx.devicePixelRatio = 1;
 
   ctx.threshold = 12;
   ctx.data = countAtPosition(sample, ctx.threshold);
