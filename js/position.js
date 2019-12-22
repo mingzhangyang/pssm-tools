@@ -1,6 +1,6 @@
 import {countAtPosition} from './compute.js';
 import sample from '../data/sample.js';
-import {setupScale, updateScale} from "./setupScale.js";
+import {setupScale} from "./setupScale.js";
 
 class DrawingBox {
   constructor (w, h, opts={}) {
@@ -54,10 +54,6 @@ function createChart() {
   let canvas = document.getElementById('line-chart-canvas');
   let ctx = canvas.getContext('2d');
 
-  setupScale(ctx);
-
-  ctx.drawingBox = new DrawingBox(ctx.w, ctx.h);
-
   ctx.threshold = 12;
   ctx.data = countAtPosition(sample, ctx.threshold);
 
@@ -77,6 +73,11 @@ function createChart() {
 }
 
 function draw(ctx, pos = {x: 0, y: 0}) {
+  ctx.clearRect(0, 0, +ctx.canvas.width, +ctx.h * ctx.canvas.height);
+  setupScale(ctx);
+
+  ctx.drawingBox = new DrawingBox(ctx.w, ctx.h);
+
   ctx.strokeStyle = '#222';
   ctx.lineWidth = 2;
   ctx.fillStyle = '#222';
@@ -84,10 +85,6 @@ function draw(ctx, pos = {x: 0, y: 0}) {
   ctx.textBaseline = 'middle';
   ctx.font = '16px Arial';
   ctx.save();
-
-  ctx.clearRect(0, 0, +ctx.canvas.width, +ctx.h * ctx.canvas.height);
-
-  updateScale(ctx);
 
   ctx.translate(ctx.drawingBox.outerBoxOrigin.x, ctx.drawingBox.outerBoxOrigin.y);
   ctx.beginPath();
