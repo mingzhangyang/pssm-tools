@@ -26,9 +26,6 @@ function recognize(canvas, evt) {
 
 export default function setup() {
   let canvas = document.getElementById("canvas");
-  let ctx = canvas.getContext("2d");
-
-  setupScale(ctx);
 
   draw_2(canvas, m);
   document.getElementById("count").innerText = m.size + '';

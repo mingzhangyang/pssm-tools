@@ -1,6 +1,6 @@
 import {gradient} from "./color.js";
 import {aaa} from "./aaa.js";
-import {updateScale} from "./setupScale.js";
+import {setupScale} from "./setupScale.js";
 
 export function draw_1(canvas, data, opts) {
   let ctx = canvas.getContext("2d");
@@ -98,8 +98,7 @@ export function draw_2(canvas, m, opts={squareWidth: 6, spacing: 2}) {
   }
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-  updateScale(ctx);
+  setupScale(ctx);
 
   let d = opts.squareWidth;
   let n = 0;
